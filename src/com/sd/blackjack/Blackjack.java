@@ -70,12 +70,43 @@ public class Blackjack {
 			
 			System.out.println("Cartas do Dealer: " + dealerDeck.toString());
 			
-			if(dealerDeck.cartasValue() > jogadorDeck.cartasValue() && fimJogo == false) {
+			if(dealerDeck.cartasValue() > jogadorDeck.cartasValue() && !fimJogo) {
 				System.out.println("Dealer ganhou!");
 				dinheiroApostaInicial -=  valorApostado;
 				fimJogo = true;
 			}
-			//FALTA MAIS COISAS PARA IMPLEMENTAR
+			
+			while((dealerDeck.cartasValue() < 17 ) && !fimJogo) {
+				dealerDeck.pegarUmaCartaDoBaralho(playingDeck);
+				System.out.println("Ultima carta do Dealer: " + dealerDeck.getCartas(dealerDeck.tamanhoBaralho() - 1).toString());
+			}
+			
+			System.out.println("Cartas do Dealer valem: " + dealerDeck.cartasValue());
+			if((dealerDeck.cartasValue() > 21) && !fimJogo) {
+				System.out.println("Dealer perdeu! Voce ganhou");
+				dinheiroApostaInicial += valorApostado;
+				fimJogo = true;
+			}
+			
+			if((jogadorDeck.cartasValue() == dealerDeck.cartasValue()) && !fimJogo) {
+				System.out.println("EMPATE");
+				fimJogo = true;
+			}
+			
+			if((jogadorDeck.cartasValue() > dealerDeck.cartasValue()) && !fimJogo) {
+				System.out.println("Voce venceu!");
+				dinheiroApostaInicial += valorApostado;
+				fimJogo = true;
+			} else if(!fimJogo) {
+				System.out.println("Voce perdeu essa rodada");
+				dinheiroApostaInicial -= valorApostado;
+				fimJogo = true;
+			}
+			
+			jogadorDeck.moverTodoBaralho(playingDeck);
+			dealerDeck.moverTodoBaralho(playingDeck);
+			
+			System.out.println("Rodada encerrada.\n");
 		}
 		
 		userInput.close();

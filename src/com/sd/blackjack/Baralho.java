@@ -8,7 +8,7 @@ public class Baralho {
 	private ArrayList<Card> cartas;
 	
 	public Baralho() {
-		this.cartas = new ArrayList<Card>();
+		this.cartas = new ArrayList<>();
 	}
 	
 	public void createFullDeck() {
@@ -20,7 +20,7 @@ public class Baralho {
 	}
 	
 	public void embaralhamento() {
-		ArrayList<Card> tempDeck = new ArrayList<Card>();
+		ArrayList<Card> tempDeck = new ArrayList<>();
 		Random random = new Random();
 		int randomCartaId = 0;
 		int tamanhoOriginal = this.cartas.size();
@@ -36,9 +36,9 @@ public class Baralho {
 
 	@Override
 	public String toString() {
-		String listaCartasCriadas = "";
+		StringBuilder listaCartasCriadas = new StringBuilder();
 		for(Card carta : this.cartas) {
-			listaCartasCriadas += "\n " + carta.toString();
+			listaCartasCriadas.append("\n " + carta.toString());
 		}
 		return " \n " + listaCartasCriadas + "\n ";
 	}
@@ -60,6 +60,19 @@ public class Baralho {
 		return this.cartas.size();
 	}
 	
+	public void moverTodoBaralho(Baralho moverPara) {
+		int tamanhoBaralho = this.cartas.size();
+		
+		for(int i = 0; i < tamanhoBaralho; i++) {
+			moverPara.addCarta(this.getCartas(i));
+		}
+		
+		for(int i = 0; i < tamanhoBaralho; i++) {
+			this.removeCarta(0);
+		}
+		
+	}
+	
 	public void pegarUmaCartaDoBaralho(Baralho comingFrom) {
 		this.cartas.add(comingFrom.getCartas(0));
 		comingFrom.removeCarta(0);
@@ -70,8 +83,8 @@ public class Baralho {
 		int valorTotal = 0;
 		//int as = 0; //representacao da quantidade das cartas "A"
 		
-		for(Card cartas : this.cartas) {
-			switch (cartas.getValor()){
+		for(Card cards : this.cartas) {
+			switch (cards.getValor()){
 			case DOIS: valorTotal += 2;
 				break;
 			case TRES: valorTotal += 3;
@@ -101,7 +114,7 @@ public class Baralho {
 					valorTotal += 1;
 				} else {
 					valorTotal += 11;
-				};
+				}
 				break;
 			}
 		}
